@@ -1,0 +1,158 @@
+* {background-color: black}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.App hr {
+  width: 100%;
+}
+
+.information {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.information .category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.information .category label {
+  color: #fff;
+}
+
+.information input {
+  width: 10vw;
+  height: auto;
+  font-size: 18px;
+  padding-left: 10px;
+  margin: 5px;
+  color: #fff;
+}
+
+.information button {
+  width: 5vw;
+  height: auto;
+  font-size: 18px;
+  padding-left: 10px;
+  margin: 5px;
+  color: black;
+  background-color: white;
+}
+
+.information .add-employee:hover {
+  background-color: aqua;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.employees {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.employees h1{
+  font-size: xx-large;
+  margin: 2vh auto;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #fff
+}
+
+.employees .columns {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: left;
+  align-items: center;
+}
+
+.employees .columns h3 {
+  width: 10vw;
+  height: auto;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  margin: auto 2px;
+  text-decoration: underline;
+}
+
+.employee {
+  /* width: 100%;
+  height: auto;
+  border: 1px solid black; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: left;
+  align-items: center;
+  /* font-family: monospace; */
+  /* background-color: aqua; */
+}
+
+.employee .values {
+  width: 100%;
+  height: auto;
+  border: 1px solid white;
+  display: flex;
+  font-family: monospace;
+}
+
+.employee .values .value {
+  /* margin: 20px; */
+  border: 1px transparent;
+  text-align: center;
+  background-color: transparent;
+  width: 10vw;
+  height: auto;
+  font-size: 18px;
+  color: #fff;
+  /* margin: 5px; */
+}
+
+.employee .values .value:hover {
+  transition: all 0.3s ease;
+  color: aqua;
+}
+
+.employee .values .delete {
+  /* content: "\00d7"; */
+  color: #fff;
+  /* background-color: gray; */
+}
+
+.employee .values .delete:hover {
+  transition: all 0.3s ease;
+  color: red;
+}
+
+.update_settings input {
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  padding-left: 10px;
+  margin: 5px;
+}
+
+.update_settings select {
+  width: 140px;
+  height: 50px;
+  font-size: 18px;
+  padding-left: 10px;
+  margin: 5px;
+}
