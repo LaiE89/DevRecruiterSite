@@ -1,6 +1,7 @@
 import '../App.css';
 import { useState } from "react";
 import Axios from 'axios';
+import axios from 'axios';
 
 function Register() {
 
@@ -29,17 +30,18 @@ function Register() {
             const isPassMatch = newAccount.password == retypePasswordReg;
             const isEmailValid = emailRegex.test(newAccount.email);
             if (!isDuplicate && isPassMatch && isEmailValid) {
-                const randomCode = generateRandomCode();
-                console.log("Random code: " + randomCode);
-                let verificationCode = prompt('Please enter the verification code sent to ' + newAccount.email);
-                console.log(verificationCode);
-                if (verificationCode == randomCode) {
-                    Axios.post("http://localhost:3001/create", newAccount).then(() => { // Sending new account to the backend
-                        console.log("successfully added " + newAccount.email);
-                    }); 
-                }else {
-                    console.log("Code is incorrect")
-                }
+                axios.post("http://localhost:3001/send_code/" + newAccount.email).then((response) => {
+                    const randomCode = response.data;
+                    console.log("This is the random code: " + randomCode);
+                    let verificationCode = prompt('Please enter the verification code sent to ' + newAccount.email);
+                    if (verificationCode == randomCode) {
+                        Axios.post("http://localhost:3001/create", newAccount).then(() => { // Sending new account to the backend
+                            console.log("successfully added " + newAccount.email);
+                        }); 
+                    }else {
+                        console.log("Code is incorrect")
+                    }
+                });
             }else {
                 if (isDuplicate) {
                     console.log(newAccount.email + " or " + newAccount.username + " is already taken");
@@ -63,16 +65,6 @@ function Register() {
             }
         }
         return false;
-    }
-
-    const generateRandomCode = () => {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const charactersLength = characters.length;
-        for (let i = 0; i < 5; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
     }
 
     return (

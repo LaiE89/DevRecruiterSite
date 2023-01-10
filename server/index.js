@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 app.use(cors());
 app.use(express.json());
 
+// Database methods
 const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
@@ -87,6 +88,44 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
+// Email methods
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'devrecruiter123@gmail.com',
+      pass: 'ugkoeojxmofisojz' // This is the 2-step verification app password. Original password: mysql123$
+    }
+});
+
+app.post('/send_code/:email', (req, res) => {
+    const email = req.params.email;
+    const randomCode = generateRandomCode();
+    var mailOptions = {
+        from: 'devrecruiter123@gmail.com',
+        to: email,
+        subject: 'Sending Email using Node.js',
+        text: 'Here is your code for Dev Spy: ' + randomCode
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log("Error sending email: " + error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+    res.send(randomCode);
+});
+
+const generateRandomCode = () => {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 5; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
 const portNumber = 3001;
 
