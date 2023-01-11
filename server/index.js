@@ -38,17 +38,16 @@ app.post('/create', (req, res) => { // Get something from front end, use req. Se
 });
 
 app.put('/update', (req, res) => {
-    console.log("Update Selection: " + req.body.update_selection);
     const id = req.body.id;
-    const update_selection = req.body.update_selection;
-    const newVal = req.body.newVal;
-    db.query("UPDATE accounts SET ?? = ? WHERE id = ?", [update_selection, newVal, id], (err, result) => {
-        if (err) {
-            console.log(err);
-        }else {
-            res.send(result);
-        }
-    }); 
+    const newDict = req.body.newDict;
+    // console.log(newDict);
+    for (let [key, value] of Object.entries(newDict)) {
+        db.query("UPDATE accounts SET ?? = ? WHERE id = ?", [key, value, id], (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+        }); 
+    }
 });
 
 app.delete('/delete/:id', (req, res) => {
@@ -76,11 +75,11 @@ app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    db.query("SELECT * FROM users WHERE username = ? AND password = SHA1(?)", [username, password], (err, result) => {
+    db.query("SELECT * FROM accounts WHERE username = ? AND password = SHA1(?)", [username, password], (err, result) => {
         if (err) {
             res.send({err: err});
         }else {
-            if (result) {
+            if (result.length > 0) {
                 res.send(result);
             }else {
                 res.send({message: "Wrong username or password"});

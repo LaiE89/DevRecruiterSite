@@ -1,7 +1,6 @@
 import '../App.css';
 import { useState } from "react";
 import Axios from 'axios';
-import axios from 'axios';
 
 function Register() {
 
@@ -30,7 +29,7 @@ function Register() {
             const isPassMatch = newAccount.password == retypePasswordReg;
             const isEmailValid = emailRegex.test(newAccount.email);
             if (!isDuplicate && isPassMatch && isEmailValid) {
-                axios.post("http://localhost:3001/send_code/" + newAccount.email).then((response) => {
+                Axios.post("http://localhost:3001/send_code/" + newAccount.email).then((response) => {
                     const randomCode = response.data;
                     console.log("This is the random code: " + randomCode);
                     let verificationCode = prompt('Please enter the verification code sent to ' + newAccount.email);

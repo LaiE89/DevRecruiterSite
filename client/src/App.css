@@ -1,5 +1,6 @@
 * {background-color: black}
 
+/* Global */
 .App {
   display: flex;
   flex-direction: column;
@@ -10,6 +11,11 @@
   width: 100%;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+/* Login & Register page */
 .login {
   display: flex;
   flex-direction: column;
@@ -63,55 +69,21 @@
 }
 
 
-.information {
+/* Database page */
+.toolbar {
   display: flex;
   flex-direction: row;
+  justify-content: right;
+  align-items: center;
   width: 100%;
-  justify-content: center;
-  align-items: center;
 }
 
-.information .category {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
-}
-
-.information .category label {
+.toolbar a {
   color: #fff;
+  margin: auto 15px;
 }
 
-.information input {
-  width: 10vw;
-  height: auto;
-  font-size: 18px;
-  padding-left: 10px;
-  margin: 5px;
-  color: #fff;
-}
-
-.information button {
-  width: 5vw;
-  height: auto;
-  font-size: 18px;
-  padding-left: 10px;
-  margin: 5px;
-  color: black;
-  background-color: white;
-}
-
-.information .add-employee:hover {
-  background-color: aqua;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.employees {
+.database {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,7 +91,7 @@ button:hover {
   width: 100%;
 }
 
-.employees h1{
+.database h1{
   font-size: xx-large;
   margin: 2vh auto;
   font-weight: bold;
@@ -127,85 +99,77 @@ button:hover {
   color: #fff
 }
 
-.employees .columns {
+.database .columns {
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
 }
 
-.employees .columns h3 {
-  width: 10vw;
+.database .columns h3 {
+  width: 15vw;
   height: auto;
-  font-size: 18px;
+  font-size: 1.5vw;
   color: #fff;
   text-align: center;
-  margin: auto 2px;
+  margin: auto 5px;
+  margin-bottom: 10px;
   text-decoration: underline;
-}
-
-.employee {
-  /* width: 100%;
-  height: auto;
-  border: 1px solid black; */
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: left;
-  align-items: center;
-  /* font-family: monospace; */
   /* background-color: aqua; */
 }
 
-.employee .values {
-  width: 100%;
-  height: auto;
-  border: 1px solid white;
+.database .values {
   display: flex;
-  font-family: monospace;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-.employee .values .value {
-  /* margin: 20px; */
-  border: 1px transparent;
-  text-align: center;
-  background-color: transparent;
-  width: 10vw;
+.accounts h3 {
+  width: 15vw;
   height: auto;
-  font-size: 18px;
+  font-size: 1vw;
   color: #fff;
-  /* margin: 5px; */
+  text-align: center;
+  margin: 5px 5px;
+  /* background-color: aqua; */
 }
 
-.employee .values .value:hover {
-  transition: all 0.3s ease;
-  color: aqua;
+/* Profile settings page */
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
-.employee .values .delete {
-  /* content: "\00d7"; */
+.settings label {
+  width: 15vw;
+  height: auto;
+  font-size: 1vw;
   color: #fff;
-  /* background-color: gray; */
+  text-align: center;
+  margin: 10px auto;
 }
 
-.employee .values .delete:hover {
-  transition: all 0.3s ease;
-  color: red;
+.settings input {
+  width: 15vw;
+  height: auto;
+  font-size: 1vw;
+  color: #fff;
+  text-align: center;
+  margin: 3px auto;
 }
 
-.update_settings input {
-  width: 150px;
-  height: 50px;
-  font-size: 18px;
-  padding-left: 10px;
-  margin: 5px;
-}
-
-.update_settings select {
-  width: 140px;
-  height: 50px;
-  font-size: 18px;
-  padding-left: 10px;
-  margin: 5px;
+.settings button {
+  width: 15vw;
+  height: auto;
+  font-size: 1vw;
+  color: black;
+  background-color: white;
+  text-align: center;
+  margin: 20px auto;
 }
