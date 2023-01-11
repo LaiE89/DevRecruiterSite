@@ -90,10 +90,10 @@ app.post('/login', (req, res) => {
 
 // Email methods
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'hotmail',
     auth: {
-      user: 'devrecruiter123@gmail.com',
-      pass: 'ugkoeojxmofisojz' // This is the 2-step verification app password. Original password: mysql123$
+      user: 'devrecruiter@outlook.com',
+      pass: 'mysql123$'
     }
 });
 
@@ -101,10 +101,10 @@ app.post('/send_code/:email', (req, res) => {
     const email = req.params.email;
     const randomCode = generateRandomCode();
     var mailOptions = {
-        from: 'devrecruiter123@gmail.com',
+        from: "devrecruiter@outlook.com",
         to: email,
-        subject: 'Sending Email using Node.js',
-        text: 'Here is your code for Dev Spy: ' + randomCode
+        subject: 'Dev Recruiter Verification Code',
+        text: 'Here is your code for Dev Spy: ' + randomCode,
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {

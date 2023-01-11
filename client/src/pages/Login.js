@@ -18,9 +18,12 @@ function Login() {
             }else {
                 // setLoginStatus(response.data[0].username);
                 if (localStorage.getItem('user')) {
-                    localStorage.clear();
+                    const oldUser = localStorage.getItem('user');
+                    alert("Already logged in as: " + JSON.parse(oldUser).username);
+                    // localStorage.clear();
+                }else {
+                    localStorage.setItem('user', JSON.stringify(response.data[0]));
                 }
-                localStorage.setItem('user', JSON.stringify(response.data[0]));
                 window.location.replace("/database");
             }
         });
