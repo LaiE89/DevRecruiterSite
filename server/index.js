@@ -3,16 +3,17 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-
+require('dotenv').config();
+console.log(process.env.USER, process.env.HOST, process.env.password, process.env.DATABASE, process.env.EMAIL, process.env.EMAIL_PASSWORD)
 app.use(cors());
 app.use(express.json());
 
 // Database methods
 const db = mysql.createConnection({
-    user: 'root',
-    host: 'localhost',
-    password: '',
-    database: 'employee_system',
+    user: process.env.USER,
+    host: process.env.HOST,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
 });
 
 // Insert stuff into the database with routes
@@ -104,8 +105,8 @@ app.get('/skills', (req, res) => {
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
     auth: {
-      user: 'devrecruiter@outlook.com',
-      pass: 'mysql123$'
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
     }
 });
 
@@ -113,7 +114,8 @@ app.post('/send_code/:email', (req, res) => {
     const email = req.params.email;
     const randomCode = generateRandomCode();
     var mailOptions = {
-        from: "devrecruiter@outlook.com",
+        // from: "devrecruiter@outlook.com",
+        from: process.env.EMAIL,
         to: email,
         subject: 'Dev Recruiter Verification Code',
         text: 'Here is your code for Dev Spy: ' + randomCode,
