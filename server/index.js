@@ -41,13 +41,15 @@ app.put('/update', (req, res) => {
     const id = req.body.id;
     const newDict = req.body.newDict;
     // console.log(newDict);
-    for (let [key, value] of Object.entries(newDict)) {
-        db.query("UPDATE accounts SET ?? = ? WHERE id = ?", [key, value, id], (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-        }); 
-    }
+
+    db.query("UPDATE accounts SET name = ?, email = ?, phone = ?, country = ?, skills = ?, resume = ?, username = ?, password = ? WHERE id = ?", 
+    [newDict.name, newDict.email, newDict.phone, newDict.country, newDict.skills, newDict.resume, newDict.username, newDict.password, id], (err, result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
+        }
+    });
 });
 
 app.delete('/delete/:id', (req, res) => {
@@ -84,6 +86,16 @@ app.post('/login', (req, res) => {
             }else {
                 res.send({message: "Wrong username or password"});
             }
+        }
+    });
+});
+
+app.get('/skills', (req, res) => {
+    db.query("SELECT skillname FROM skills", (err, result) => {
+        if (err) {
+            console.log(err);
+        }else {
+            res.send(result);
         }
     });
 });

@@ -1,4 +1,4 @@
-* {background-color: black}
+html {background-color: black}
 
 /* Global */
 .App {
@@ -39,7 +39,15 @@ button:hover {
   height: 5vh;
   font-size: 30px;
   margin: 10px;
-  color: #fff;
+  color: black;
+}
+
+.login input[type=file] {
+  width: 15vw;
+  height: 5vh;
+  font-size: 30px;
+  margin: 10px;
+  color: white;
 }
 
 .login a {
@@ -159,7 +167,7 @@ button:hover {
   width: 15vw;
   height: auto;
   font-size: 1vw;
-  color: #fff;
+  color: black;
   text-align: center;
   margin: 3px auto;
 }
@@ -170,6 +178,16 @@ button:hover {
   font-size: 1vw;
   color: black;
   background-color: white;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.settings .autocomplete .react-select__control {
+  width: 15vw;
+  height: auto;
+  font-size: 1vw;
+  color: white;
+  background-color: black;
   text-align: center;
   margin: 20px auto;
 }

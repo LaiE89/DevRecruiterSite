@@ -1,6 +1,7 @@
 import '../App.css';
 import { useEffect, useState } from "react";
 import Axios from 'axios';
+import AsyncSelect from 'react-select/async';
 
 function ProfileSettings() {
     const [id, setID] = useState(0);
@@ -13,12 +14,13 @@ function ProfileSettings() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [accountList, setAccountList] = useState([]);
-
+    const [skillsList, setSkillsList] = useState([]);
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
+            getSkills();
             const parsedUser = JSON.parse(loggedInUser);
+            // console.log(parsedUser);
             setID(parsedUser.id);
             setName(parsedUser.name);
             setEmail(parsedUser.email);
@@ -28,38 +30,94 @@ function ProfileSettings() {
             setResume(parsedUser.resume);
             setUsername(parsedUser.username);
             setPassword(parsedUser.password);
+        }else {
+            alert("Account has been logged out");
+            logout();
         }
     }, []);
   
-    const getAccounts = () => {
-        Axios.get("http://localhost:3001/accounts").then((response) => {
-            setAccountList(response.data);
+    const getSkills = () => {
+        Axios.get("http://localhost:3001/skills").then((response) => {
+            let result = [];
+            for (let key in response.data) {
+                if(response.data.hasOwnProperty(key)) {
+                    let value = response.data[key].skillname.replace("\r", "");
+                    result.push({value: value, label: value, color: "black", id: parseInt(key) + 1});
+                }
+            }
+            // console.log(result);
+            setSkillsList(result);
         });
     };
   
     const updateAccount = (id, newDict) => {
-        Axios.put("http://localhost:3001/update", {newDict: newDict, id: id}).then(() => {
+        Axios.put("http://localhost:3001/update", {newDict: newDict, id: id}).then((response) => {
             // setAccountList(accountList.map((val) => {
             //     return val.id == id ? newDict : val;
             // }));
-            const loggedInUser = localStorage.getItem("user");
-            console.log(JSON.parse(loggedInUser));
+            newDict.id = id;
+            localStorage.setItem('user', JSON.stringify(newDict));
         });
     };
   
     const deleteAccount = (id) => {
         Axios.delete("http://localhost:3001/delete/" + id).then((response) => {
-            setAccountList(accountList.filter((val) => {
-                return val.id != id;
-            }))
-            localStorage.clear();
-            window.location.replace("/");
+            // setAccountList(accountList.filter((val) => {
+            //     return val.id != id;
+            // }))
+            logout();
         });
     };
 
     const logout = () => {
         localStorage.clear();
         window.location.replace("/");
+    };
+
+// React-select methods
+    const handleChange = (selectedOption) => {
+        let result = [];
+        selectedOption.forEach(function (arrayItem) {
+            result.push(arrayItem.id);
+        });
+        // console.log(JSON.stringify(result));
+        setSkills(JSON.stringify(result));
+    };
+
+    const loadOptions = (searchValue, callback) => {
+        setTimeout(() => {
+            const filteredOptions = skillsList.filter((option) => 
+                option.label.toLowerCase().includes(searchValue.toLowerCase())
+            );
+            // console.log('Load options', searchValue, filteredOptions)
+            callback(filteredOptions);
+        }, 2000);
+    };
+
+    const colorStyles = {
+        control: (styles) => ({
+            ...styles,
+        }),
+        option: (styles, {data, isDisable, isFocused, isSelected}) => {
+            return {...styles, color: data.color};
+        },
+        multiValue: (styles, {data}) => {
+            return {
+                ...styles,
+                backgroundColor: "#fff",
+                color: data.color
+            }
+        },
+        placeholder: (styles) => {
+            return {
+                ...styles,
+                color: '#fff',
+            }
+        },
+        input: (styles) => ({
+            ...styles,
+            color: "#fff"
+        })
     };
   
     return (
@@ -81,7 +139,16 @@ function ProfileSettings() {
             <input type="text" value={country} onChange={(e) => {setCountry(e.target.value)}}></input>
             
             <label>Skills:</label>
-            <input type="text" value={skills} onChange={(e) => {setSkills(e.target.value)}}></input>
+            
+            <div className="autocomplete">
+                <AsyncSelect 
+                    classNamePrefix="react-select"
+                    loadOptions={loadOptions}
+                    onChange={handleChange}
+                    isMulti
+                    styles={colorStyles}
+                />
+            </div>
 
             <label>Resume:</label>
             <input type="file" onChange={(e) => {
