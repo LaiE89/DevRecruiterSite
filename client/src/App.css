@@ -68,6 +68,8 @@ button:hover {
 }
 
 .login button {
+  text-align: center;
+  line-height: 2vh;
   width: 10vw;
   height: 3vh;
   font-size: 20px;
@@ -170,6 +172,10 @@ button:hover {
   color: black;
   text-align: center;
   margin: 3px auto;
+}
+
+.settings input[type=file] {
+  color: white;
 }
 
 .settings button {

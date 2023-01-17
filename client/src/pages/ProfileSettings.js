@@ -49,6 +49,21 @@ function ProfileSettings() {
             setSkillsList(result);
         });
     };
+
+    const getSkillsFromJson = () => {
+        try {
+            const curSkillIds = JSON.parse(skills);
+            const result = []
+            for (let i = 0; i < curSkillIds.length; i++) {
+                const skill = skillsList.find(x => x.id === curSkillIds[i]);
+                result.push(skill);
+            }
+            console.log(result);
+            return result;   
+        } catch (error) {
+            // console.log(error);
+        }
+    }
   
     const updateAccount = (id, newDict) => {
         Axios.put("http://localhost:3001/update", {newDict: newDict, id: id}).then((response) => {
@@ -80,7 +95,7 @@ function ProfileSettings() {
         selectedOption.forEach(function (arrayItem) {
             result.push(arrayItem.id);
         });
-        // console.log(JSON.stringify(result));
+        console.log(JSON.stringify(result));
         setSkills(JSON.stringify(result));
     };
 
@@ -142,9 +157,12 @@ function ProfileSettings() {
             
             <div className="autocomplete">
                 <AsyncSelect 
+                    id='skills-select'
                     classNamePrefix="react-select"
                     loadOptions={loadOptions}
                     onChange={handleChange}
+                    value={getSkillsFromJson()}
+                    // value={[skillsList[1], skillsList[2], skillsList[3]]}
                     isMulti
                     styles={colorStyles}
                 />
